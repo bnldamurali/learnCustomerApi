@@ -23,7 +23,7 @@ public class TestCustomerController {
                         .get("/api/v1/customer/21"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("test First123 Name"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("test First Name"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.custId").value(121L));
     }
 
