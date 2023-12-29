@@ -21,19 +21,4 @@ jobs:
           cache: maven
 
       - name: Unit Tests
-        #TODO need explore more
         run: mvn -B test --file pom.xml
-
-      - name: Build Application
-        run: |
-          mvn clean
-          #TODO need explore more
-          mvn -B package --file pom.xml
-
-      - name: Build Docker Image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          dockerfile: Dockerfile
-          push: false
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/learningCustomerApi-snapshot:$(date +'%Y-%m-%d_%H-%M-%S')
