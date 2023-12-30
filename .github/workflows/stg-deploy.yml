@@ -1,7 +1,7 @@
 name: Build and Deploy Learning Customer Microservice
 
 on:
-  push:
+  pull_request:
     branches:
       - staging
 
