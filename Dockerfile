@@ -1,14 +1,12 @@
-# Fetching latest version of Java
-FROM openjdk:17-jdk
+FROM eclipse-temurin:17-jdk-focal
 
-MAINTAINER learningCustomerMicroservices
-
-# Setting up work directory
 WORKDIR /app
 
-# Copy the jar file into our app
-COPY target/larning-customer-api-1.0.0.jar /app/larning-customer-api.jar
+# Copy the application JAR file into the container at /app
+COPY target/learnCustomerApi-0.0.1-SNAPSHOT.jar /app/learnCustomerApi-0.0.1-SNAPSHOT.jar
 
-EXPOSE 8080
+# Expose the port that the application will run on
+EXPOSE 8083
 
-CMD ["java", "-jar", "larning-customer-api.jar"]
+# Specify the command to run on container start
+CMD ["java", "-jar", "learnCustomerApi-0.0.1-SNAPSHOT.jar"]
