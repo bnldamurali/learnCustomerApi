@@ -1,4 +1,4 @@
-name: Build and Test Learning Customer Microservice
+name: Build and Push Docker Image
 
 on:
   pull_request:
@@ -6,35 +6,31 @@ on:
       - staging
 
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
+
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - uses: actions/checkout@v3
-
-      - uses: actions/download-artifact@master
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          name: jar-file
-          path: app.jar
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+      - name: Build Spring Boot JAR
+        run: mvn clean install
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/learning-customer-api:latest -f Dockerfile .
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Set env
-        run: echo "DATE=$(date +%s)" >> $GITHUB_ENV
-
-      - name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/learning-customer-api:${{ env.DATE }}
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/learning-customer-api:latest
