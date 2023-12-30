@@ -1,14 +1,11 @@
-# Fetching latest version of Java
-FROM openjdk:17-jdk
+FROM eclipse-temurin:17-jdk-focal
 
-MAINTAINER learningCustomerMicroservices
-
-# Setting up work directory
 WORKDIR /app
 
-# Copy the jar file into our app
-COPY target/learnCustomerApi-0.0.1-SNAPSHOT.jar /app/larning-customer-api.jar
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+#RUN ./mvnw dependency:go-offline
 
-EXPOSE 8080
+COPY src ./src
 
-CMD ["java", "-jar", "larning-customer-api.jar"]
+CMD ["./mvnw", "spring-boot:run"]
