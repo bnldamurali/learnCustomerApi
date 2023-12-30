@@ -24,7 +24,7 @@ jobs:
         run: mvn clean install
 
       - name: Set env
-        run: echo "DATE=$(date +%s)" >> $GITHUB_ENV
+        run: echo "DATE='SNAPSHOT-'$(date +%s)" >> $GITHUB_ENV
 
       - name: Build Docker image
         run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/learning-customer-api:${{ env.DATE }} -f Dockerfile .
