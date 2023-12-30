@@ -7,7 +7,7 @@ MAINTAINER learningCustomerMicroservices
 WORKDIR /app
 
 # Copy the jar file into our app
-COPY target/larning-customer-api-1.0.0.jar /app/larning-customer-api.jar
+COPY target/learnCustomerApi-0.0.1-SNAPSHOT.jar /app/larning-customer-api.jar
 
 EXPOSE 8080
 
